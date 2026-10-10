@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIRE-Craft 智慧理財 - 五大退休模式與 AI 財務診斷專家</title>
+    <title>FIRE-Craft 智慧理財 - 五大退休模式與深度 AI 財務診斷專家</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js -->
@@ -17,7 +17,7 @@
             display: none;
             position: absolute;
             z-index: 50;
-            width: 260px;
+            width: 280px;
             padding: 10px 12px;
             background-color: #1e293b;
             color: #f1f5f9;
@@ -50,12 +50,15 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-black tracking-tight text-white">FIRE-Craft 智慧理財</h1>
-                    <p class="text-xs text-slate-400">5大退休模式 × 4%法則 × 護城河健檢 × 智慧 AI 診斷</p>
+                    <p class="text-xs text-slate-400">5大退休模式 × 4%法則 × 護城河健檢 × 深度 AI 財務報告</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
+                <button onclick="clearAllFields()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-medium rounded-lg transition border border-slate-600 flex items-center gap-2">
+                    <i class="fa-solid fa-rotate-left"></i> 清空重設欄位
+                </button>
                 <button onclick="loadDefaultPreset()" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-medium rounded-lg transition border border-slate-600 flex items-center gap-2">
-                    <i class="fa-solid fa-rotate-left"></i> 重設預設值
+                    <i class="fa-solid fa-magic"></i> 載入範例數據
                 </button>
                 <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-lg transition shadow-lg shadow-emerald-600/30 flex items-center gap-2">
                     <i class="fa-solid fa-file-pdf"></i> 匯出完整報告 / 列印
@@ -72,12 +75,11 @@
                 <h2 class="text-base font-bold text-white flex items-center gap-2">
                     <i class="fa-solid fa-compass text-emerald-400"></i> 選擇您的 FIRE 退休模式
                 </h2>
-                <span class="text-xs text-slate-400">點擊切換模式，系統將動態調適計算模型</span>
+                <span class="text-xs text-slate-400">點擊切換模式，系統將自動調適計算模型</span>
             </div>
             <p class="text-xs text-slate-400 mb-5">不同的 FIRE 模式代表不同的退休哲學與開銷條件，請選擇最符合您理想生活的模式：</p>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                <!-- Regular FIRE -->
                 <div onclick="setFireMode('regular')" id="mode-regular" class="mode-card cursor-pointer bg-slate-700/50 border-2 border-emerald-500 rounded-xl p-4 transition hover:bg-slate-700">
                     <div class="font-bold text-white text-sm mb-1 flex justify-between items-center">
                         Regular FIRE
@@ -85,7 +87,6 @@
                     </div>
                     <p class="text-xs text-slate-300">維持現有生活品質，不特別節儉，享有合理的娛樂與舒適退休。</p>
                 </div>
-                <!-- Lean FIRE -->
                 <div onclick="setFireMode('lean')" id="mode-lean" class="mode-card cursor-pointer bg-slate-700/50 border-2 border-slate-600 rounded-xl p-4 transition hover:bg-slate-700">
                     <div class="font-bold text-white text-sm mb-1 flex justify-between items-center">
                         Lean FIRE
@@ -93,7 +94,6 @@
                     </div>
                     <p class="text-xs text-slate-300">大幅降低物慾與開銷（降至70%），以極簡生活實現最快速退休。</p>
                 </div>
-                <!-- Fat FIRE -->
                 <div onclick="setFireMode('fat')" id="mode-fat" class="mode-card cursor-pointer bg-slate-700/50 border-2 border-slate-600 rounded-xl p-4 transition hover:bg-slate-700">
                     <div class="font-bold text-white text-sm mb-1 flex justify-between items-center">
                         Fat FIRE
@@ -101,7 +101,6 @@
                     </div>
                     <p class="text-xs text-slate-300">追求更高生活品質、頻繁出國與優渥開銷（增至140%），抗風險能力高。</p>
                 </div>
-                <!-- Barista FIRE -->
                 <div onclick="setFireMode('barista')" id="mode-barista" class="mode-card cursor-pointer bg-slate-700/50 border-2 border-slate-600 rounded-xl p-4 transition hover:bg-slate-700">
                     <div class="font-bold text-white text-sm mb-1 flex justify-between items-center">
                         Barista FIRE
@@ -109,7 +108,6 @@
                     </div>
                     <p class="text-xs text-slate-300">提早退休但保留輕鬆兼職收入（如每月2萬），大幅降低本金門檻。</p>
                 </div>
-                <!-- Coast FIRE -->
                 <div onclick="setFireMode('coast')" id="mode-coast" class="mode-card cursor-pointer bg-slate-700/50 border-2 border-slate-600 rounded-xl p-4 transition hover:bg-slate-700">
                     <div class="font-bold text-white text-sm mb-1 flex justify-between items-center">
                         Coast FIRE
@@ -123,11 +121,11 @@
         <!-- 核心輸入與圖表區 -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <!-- 左側：參數輸入區 -->
+            <!-- 左側：參數輸入區（全清空無預設值） -->
             <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl space-y-5 print-border">
                 <h2 class="text-base font-bold text-white border-b border-slate-700 pb-3 flex items-center justify-between print-text">
                     <span class="flex items-center gap-2"><i class="fa-solid fa-sliders text-emerald-400"></i> 個人財務參數設定</span>
-                    <span class="text-xs text-slate-400 font-normal">填寫指引</span>
+                    <span class="text-xs text-slate-400 font-normal">請依序填寫</span>
                 </h2>
 
                 <div class="space-y-4">
@@ -140,8 +138,21 @@
                                 <div class="tooltip-box">用來做為複利試算的起始點，預設會模擬至 85 歲。</div>
                             </span>
                         </div>
-                        <input type="number" id="currentAge" value="30" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
+                        <input type="number" id="currentAge" value="" placeholder="例如：30" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
                         <p class="text-[11px] text-slate-400 mt-1">請輸入您當前的實歲年齡。</p>
+                    </div>
+
+                    <!-- 預計想退休的年齡 (新加) -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-xs font-medium text-amber-300 print-text">預計想退休的年齡 (心理目標)</label>
+                            <span class="has-tooltip relative cursor-pointer text-slate-400 hover:text-amber-400">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <div class="tooltip-box">您理想中希望脫離朝九晚五職場的年齡目標。系統將拿此目標與實際複利達標年齡進行落差對比。</div>
+                            </span>
+                        </div>
+                        <input type="number" id="targetRetireAge" value="" placeholder="例如：45" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-amber-500 outline-none print-bg" oninput="calculateFIRE()">
+                        <p class="text-[11px] text-amber-400/80 mt-1">您期望達陣的目標年齡，將與計算結果對比。</p>
                     </div>
 
                     <!-- 現有淨資產 -->
@@ -153,7 +164,7 @@
                                 <div class="tooltip-box">總資產扣除總負債。包含股票、基金、存款、定存等可投入複利累積的資本。</div>
                             </span>
                         </div>
-                        <input type="number" id="currentNetWorth" value="1500000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
+                        <input type="number" id="currentNetWorth" value="" placeholder="例如：1500000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
                         <p class="text-[11px] text-slate-400 mt-1">目前可投入長期投資複利的總資本額。</p>
                     </div>
 
@@ -166,7 +177,7 @@
                                 <div class="tooltip-box">包含本業薪資、年終獎金與副業等扣除稅額後的實際年現金流入。</div>
                             </span>
                         </div>
-                        <input type="number" id="annualIncome" value="900000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
+                        <input type="number" id="annualIncome" value="" placeholder="例如：900000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
                         <p class="text-[11px] text-slate-400 mt-1">本業薪資與副業等實際扣稅後之年總流入。</p>
                     </div>
 
@@ -179,7 +190,7 @@
                                 <div class="tooltip-box">退休後每年維持特定生活品質所需的現金支出。4%法則即是依此數字乘以 25 倍計算目標門檻。</div>
                             </span>
                         </div>
-                        <input type="number" id="annualExpense" value="540000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
+                        <input type="number" id="annualExpense" value="" placeholder="例如：540000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
                         <p class="text-[11px] text-slate-400 mt-1">退休後每年維持生活所需之總支出。</p>
                     </div>
 
@@ -192,34 +203,40 @@
                                 <div class="tooltip-box">退休後透過興趣或輕度工作取得的年收入，這部分能直接折抵年支出開銷。</div>
                             </span>
                         </div>
-                        <input type="number" id="baristaIncome" value="240000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-amber-500 outline-none print-bg" oninput="calculateFIRE()">
+                        <input type="number" id="baristaIncome" value="" placeholder="例如：240000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-amber-500 outline-none print-bg" oninput="calculateFIRE()">
                         <p class="text-[11px] text-amber-400/80 mt-1">兼職收入將折抵生活費，進而大幅降低目標本金需求。</p>
                     </div>
 
-                    <!-- 投資年化報酬率 -->
+                    <!-- 投資年化報酬率 (詳盡解說) -->
                     <div>
                         <div class="flex justify-between items-center mb-1">
                             <label class="text-xs font-medium text-slate-300 print-text">投資年化報酬率 (%)</label>
                             <span class="has-tooltip relative cursor-pointer text-slate-400 hover:text-emerald-400">
                                 <i class="fa-solid fa-circle-info"></i>
-                                <div class="tooltip-box">全球股票市場（如 VT、S&P500）長期扣除通膨後的實質年化報酬率約在 5%~7% 之間。</div>
+                                <div class="tooltip-box">
+                                    <strong>【用意與觀念說明】</strong><br>
+                                    代表您將資產長期投入全球股票市場（如標普500、VT等指數型ETF）所獲得的複利增長率。建議一律填寫<strong>「扣除通膨後的實質報酬率」</strong>（歷史經驗約 5%~7%），確保計算出的退休購買力不會被未來物價侵蝕。若填過高會導致提早達標的錯覺。
+                                </div>
                             </span>
                         </div>
-                        <input type="number" step="0.1" id="returnRate" value="7.0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
-                        <p class="text-[11px] text-slate-400 mt-1">歷史全球股票市場長期扣除通膨後的實質報酬率約 5%~7%。</p>
+                        <input type="number" step="0.1" id="returnRate" value="" placeholder="例如：7.0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
+                        <p class="text-[11px] text-slate-400 mt-1">建議填寫扣除通膨後的實質報酬率（歷史約 5%~7%）。</p>
                     </div>
 
-                    <!-- 安全提領率 SWR -->
+                    <!-- 安全提領率 SWR (詳盡解說) -->
                     <div>
                         <div class="flex justify-between items-center mb-1">
                             <label class="text-xs font-medium text-slate-300 print-text">安全提領率 SWR (%)</label>
                             <span class="has-tooltip relative cursor-pointer text-slate-400 hover:text-emerald-400">
                                 <i class="fa-solid fa-circle-info"></i>
-                                <div class="tooltip-box">知名的「4%法則」，代表第一年可提領總資產 4%，隨後每年依通膨微調。提領率越低越安全。</div>
+                                <div class="tooltip-box">
+                                    <strong>【用意與觀念說明】</strong><br>
+                                    源自著名的「三一神學院研究（Trinity Study）」與 4% 法則。代表退休第一年可提領總資產的百分比，隨後每年依通膨調整。提領率決定了您的目標門檻（年開銷 ÷ 提領率 = 目標資產）。若退休期長達 40 年以上，保守者常採用 3.5% 以防範資產歸零風險。
+                                </div>
                             </span>
                         </div>
-                        <input type="number" step="0.1" id="withdrawalRate" value="4.0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
-                        <p class="text-[11px] text-slate-400 mt-1">知名「4%法則」代表第一年可提領 4%，提領率越低越安全。</p>
+                        <input type="number" step="0.1" id="withdrawalRate" value="" placeholder="例如：4.0" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none print-bg" oninput="calculateFIRE()">
+                        <p class="text-[11px] text-slate-400 mt-1">經典 4% 法則代表第一年提領 4%，提領率越低越安全。</p>
                     </div>
                 </div>
 
@@ -230,15 +247,15 @@
                         <i class="fa-solid fa-shield-halved text-emerald-400"></i>
                     </h3>
                     <label class="flex items-start gap-2 text-xs text-slate-300 cursor-pointer print-text">
-                        <input type="checkbox" id="moatDebt" checked onchange="calculateFIRE()" class="mt-0.5 rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500">
+                        <input type="checkbox" id="moatDebt" onchange="calculateFIRE()" class="mt-0.5 rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500">
                         <span>已清償高利負債（如卡循、信貸等利息高於投資報酬之債務）</span>
                     </label>
                     <label class="flex items-start gap-2 text-xs text-slate-300 cursor-pointer print-text">
-                        <input type="checkbox" id="moatEmergency" checked onchange="calculateFIRE()" class="mt-0.5 rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500">
+                        <input type="checkbox" id="moatEmergency" onchange="calculateFIRE()" class="mt-0.5 rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500">
                         <span>已備妥 6 個月以上生活費之緊急預備金（存於高利活存）</span>
                     </label>
                     <label class="flex items-start gap-2 text-xs text-slate-300 cursor-pointer print-text">
-                        <input type="checkbox" id="moatInsurance" checked onchange="calculateFIRE()" class="mt-0.5 rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500">
+                        <input type="checkbox" id="moatInsurance" onchange="calculateFIRE()" class="mt-0.5 rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500">
                         <span>規劃基礎雙實支實付醫療險與意外險（防範資產重大失血）</span>
                     </label>
                 </div>
@@ -252,20 +269,20 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-lg print-border">
                         <p class="text-xs text-slate-400 mb-1">目前儲蓄率</p>
-                        <div id="savingsRateVal" class="text-2xl font-black text-emerald-400">40.0%</div>
+                        <div id="savingsRateVal" class="text-2xl font-black text-emerald-400">0.0%</div>
                         <p id="savingsRateDesc" class="text-[11px] text-slate-400 mt-1">儲蓄率是影響退休速度的最關鍵因子</p>
                     </div>
 
                     <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-lg print-border">
                         <p class="text-xs text-slate-400 mb-1">FIRE 目標資產需求</p>
-                        <div id="targetNetWorthVal" class="text-2xl font-black text-white print-text">NT$ 13,500,000</div>
+                        <div id="targetNetWorthVal" class="text-2xl font-black text-white print-text">NT$ 0</div>
                         <p id="targetFormulaDesc" class="text-[11px] text-slate-400 mt-1">依據 4% 法則 (年開銷 × 25倍)</p>
                     </div>
 
                     <div class="bg-slate-800 border border-slate-700 rounded-2xl p-5 shadow-lg print-border">
                         <p class="text-xs text-slate-400 mb-1">預估達成 FIRE 年齡</p>
-                        <div id="fireAgeVal" class="text-2xl font-black text-amber-400">45 歲</div>
-                        <p id="fireYearsVal" class="text-[11px] text-slate-400 mt-1">約需 15 年累積期</p>
+                        <div id="fireAgeVal" class="text-2xl font-black text-amber-400">-- 歲</div>
+                        <p id="fireYearsVal" class="text-[11px] text-slate-400 mt-1">請於左側填寫各項參數</p>
                     </div>
                 </div>
 
@@ -285,22 +302,22 @@
             </div>
         </div>
 
-        <!-- 智慧財務診斷與調整建議 -->
+        <!-- 深度 AI 智慧財務診斷與調整方向 -->
         <section class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-xl space-y-4 print-border">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-700 pb-4">
                 <div>
                     <h2 class="text-lg font-bold text-white flex items-center gap-2 print-text">
-                        <i class="fa-solid fa-robot text-emerald-400"></i> Gemini AI 智慧財務診斷與調整方向
+                        <i class="fa-solid fa-robot text-emerald-400"></i> 深度 AI 智慧財務診斷與全方位調整報告書
                     </h2>
-                    <p class="text-xs text-slate-400 mt-1">針對選擇的 FIRE 模式、護城河狀態與資產成長軌跡提供個人化專家建議</p>
+                    <p class="text-xs text-slate-400 mt-1">結合所選 FIRE 模式、護城河狀態、心理目標與資產複利落差，產出專家級完整分析報告</p>
                 </div>
                 <button onclick="generateAIPeports()" class="px-5 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center gap-2 no-print">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> 生成 AI 財務診斷報告
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> 生成深度 AI 診斷報告書
                 </button>
             </div>
 
             <div id="aiReportContainer" class="bg-slate-900/80 border border-slate-700/80 rounded-xl p-5 text-slate-300 text-xs leading-relaxed space-y-4 print-bg">
-                <p class="text-slate-500 italic">點擊上方「生成 AI 財務診斷報告」按鈕，系統將為您分析專屬的財務健康度、潛在通膨風險與具體優化建議。</p>
+                <p class="text-slate-500 italic">請先於左側填寫您的財務參數，並點擊上方「生成深度 AI 診斷報告書」按鈕，系統將為您剖析全方位的財務健康與具體優化調整策略。</p>
             </div>
         </section>
 
@@ -308,7 +325,7 @@
 
     <!-- 頁尾 -->
     <footer class="bg-slate-800 border-t border-slate-700 text-center py-6 text-xs text-slate-500 mt-12 no-print">
-        <p>FIRE-Craft 智慧理財與五大退休模式專家 &copy; 2026 | 結合市場先生 4% 法則與財務護城河健檢</p>
+        <p>FIRE-Craft 智慧理財與五大退休模式專家 &copy; 2026 | 結合市場先生 4% 法則與深度財務護城河健檢</p>
     </footer>
 
     <!-- JavaScript 核心運算與圖表邏輯 -->
@@ -344,21 +361,31 @@
                 baristaContainer.classList.add('hidden');
             }
 
-            // 模式預設開銷調整
-            if (mode === 'lean') document.getElementById('annualExpense').value = 380000;
-            if (mode === 'regular') document.getElementById('annualExpense').value = 540000;
-            if (mode === 'fat') document.getElementById('annualExpense').value = 850000;
-            if (mode === 'barista') document.getElementById('annualExpense').value = 540000;
-            if (mode === 'coast') document.getElementById('annualExpense').value = 500000;
+            calculateFIRE();
+        }
 
+        function clearAllFields() {
+            document.getElementById('currentAge').value = '';
+            document.getElementById('targetRetireAge').value = '';
+            document.getElementById('currentNetWorth').value = '';
+            document.getElementById('annualIncome').value = '';
+            document.getElementById('annualExpense').value = '';
+            document.getElementById('baristaIncome').value = '';
+            document.getElementById('returnRate').value = '';
+            document.getElementById('withdrawalRate').value = '';
+            document.getElementById('moatDebt').checked = false;
+            document.getElementById('moatEmergency').checked = false;
+            document.getElementById('moatInsurance').checked = false;
             calculateFIRE();
         }
 
         function loadDefaultPreset() {
             document.getElementById('currentAge').value = 30;
+            document.getElementById('targetRetireAge').value = 45;
             document.getElementById('currentNetWorth').value = 1500000;
             document.getElementById('annualIncome').value = 900000;
             document.getElementById('annualExpense').value = 540000;
+            document.getElementById('baristaIncome').value = 240000;
             document.getElementById('returnRate').value = 7.0;
             document.getElementById('withdrawalRate').value = 4.0;
             document.getElementById('moatDebt').checked = true;
@@ -368,29 +395,39 @@
         }
 
         function calculateFIRE() {
-            const age = parseFloat(document.getElementById('currentAge').value) || 30;
+            const ageInput = document.getElementById('currentAge').value;
+            const age = parseFloat(ageInput);
             let netWorth = parseFloat(document.getElementById('currentNetWorth').value) || 0;
             const income = parseFloat(document.getElementById('annualIncome').value) || 0;
-            let expense = parseFloat(document.getElementById('annualExpense').value) || 500000;
+            let expense = parseFloat(document.getElementById('annualExpense').value) || 0;
             const returnRate = (parseFloat(document.getElementById('returnRate').value) || 7.0) / 100;
             const sdr = (parseFloat(document.getElementById('withdrawalRate').value) || 4.0) / 100;
             const baristaInc = parseFloat(document.getElementById('baristaIncome')?.value) || 0;
 
-            // 計算淨開銷
+            if (isNaN(age) || ageInput === '') {
+                document.getElementById('savingsRateVal').innerText = '0.0%';
+                document.getElementById('targetNetWorthVal').innerText = 'NT$ 0';
+                document.getElementById('fireAgeVal').innerText = '-- 歲';
+                document.getElementById('fireYearsVal').innerText = '請填寫目前年齡與財務參數';
+                updateChart([], [], []);
+                return;
+            }
+
+            // 套用模式倍率
+            expense *= modeConfigs[currentMode].expenseMultiplier;
+
             let netExpense = expense;
             if (currentMode === 'barista') {
                 netExpense = Math.max(0, expense - baristaInc);
             }
-            const targetNetWorth = netExpense / sdr;
+            const targetNetWorth = sdr > 0 ? netExpense / sdr : 0;
 
-            // 儲蓄率算式
             const savings = income - expense;
             const savingsRate = income > 0 ? (savings / income) * 100 : 0;
 
             document.getElementById('savingsRateVal').innerText = savingsRate.toFixed(1) + '%';
             document.getElementById('targetNetWorthVal').innerText = 'NT$ ' + Math.round(targetNetWorth).toLocaleString();
 
-            // 模擬年資產成長
             let currentSimNetWorth = netWorth;
             let yearsToFire = 0;
             let ageAtFire = age;
@@ -414,14 +451,14 @@
 
                 let annualAdd = savings;
                 if (currentMode === 'coast' && reached) {
-                    annualAdd = 0; // Coast FIRE 達標後不需額外儲蓄
+                    annualAdd = 0;
                 }
                 currentSimNetWorth = currentSimNetWorth * (1 + returnRate) + annualAdd;
             }
 
             if (!reached) {
                 document.getElementById('fireAgeVal').innerText = '65歲以上';
-                document.getElementById('fireYearsVal').innerText = '建議提高儲蓄率或適度降低開銷';
+                document.getElementById('fireYearsVal').innerText = '現有條件下較難達標，請提高儲蓄率';
             } else {
                 document.getElementById('fireAgeVal').innerText = ageAtFire + ' 歲';
                 document.getElementById('fireYearsVal').innerText = `預計約需 ${yearsToFire} 年累積期`;
@@ -439,11 +476,11 @@
             fireChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels,
+                    labels: labels.length ? labels : ['--'],
                     datasets: [
                         {
                             label: '預估資產淨值 (NT$)',
-                            data: netWorths,
+                            data: netWorths.length ? netWorths : [0],
                             borderColor: '#10b981',
                             backgroundColor: 'rgba(16, 185, 129, 0.1)',
                             borderWidth: 3,
@@ -452,7 +489,7 @@
                         },
                         {
                             label: 'FIRE 目標線',
-                            data: targets,
+                            data: targets.length ? targets : [0],
                             borderColor: '#f59e0b',
                             borderWidth: 2,
                             borderDash: [5, 5],
@@ -475,71 +512,127 @@
             });
         }
 
-        // 智慧 Rule-based AI 診斷引擎
+        // 深度 AI 智慧財務診斷報告書產生引擎
         function generateAIPeports() {
             const container = document.getElementById('aiReportContainer');
+            const ageInput = document.getElementById('currentAge').value;
+            
+            if (!ageInput) {
+                container.innerHTML = `<p class="text-rose-400 font-medium">請先至少填寫「目前年齡」與相關財務參數，系統才能產出精準的診斷報告書。</p>`;
+                return;
+            }
+
             container.innerHTML = `
                 <div class="flex items-center justify-center py-6 space-x-3 text-emerald-400">
                     <i class="fa-solid fa-spinner fa-spin-pulse fa-lg"></i>
-                    <span class="text-xs font-medium">正在進行精準財務風險診斷與 SWOT 分析...</span>
+                    <span class="text-xs font-medium">深度 AI 專家正在進行資產複利模擬、現金流落差與風險壓力測試...</span>
                 </div>
             `;
 
             setTimeout(() => {
-                const age = document.getElementById('currentAge').value;
+                const age = parseFloat(ageInput) || 30;
+                const targetRetireAge = parseFloat(document.getElementById('targetRetireAge').value) || (age + 15);
                 const netWorth = parseFloat(document.getElementById('currentNetWorth').value) || 0;
                 const income = parseFloat(document.getElementById('annualIncome').value) || 0;
                 const expense = parseFloat(document.getElementById('annualExpense').value) || 0;
-                const savingsRate = income > 0 ? ((income - expense) / income) * 100 : 0;
+                const returnRate = parseFloat(document.getElementById('returnRate').value) || 7.0;
+                const sdr = parseFloat(document.getElementById('withdrawalRate').value) || 4.0;
+                
+                const savings = income - expense;
+                const savingsRate = income > 0 ? (savings / income) * 100 : 0;
                 const modeName = modeConfigs[currentMode].name;
 
                 const hasDebt = document.getElementById('moatDebt').checked;
                 const hasEmergency = document.getElementById('moatEmergency').checked;
                 const hasInsurance = document.getElementById('moatInsurance').checked;
 
-                let moatStatusText = "";
-                if (hasDebt && hasEmergency && hasInsurance) {
-                    moatStatusText = "綠色健康（三關卡完全達標）";
+                // 簡單計算實際預估達標年齡
+                let adjustedExpense = expense * modeConfigs[currentMode].expenseMultiplier;
+                let targetNW = sdr > 0 ? adjustedExpense / (sdr / 100) : 10000000;
+                let simNW = netWorth;
+                let estAge = age;
+                let reached = false;
+                for(let i=0; i<=55; i++) {
+                    if(simNW >= targetNW) { estAge = age + i; reached = true; break; }
+                    simNW = simNW * (1 + (returnRate/100)) + savings;
+                }
+                if(!reached) estAge = age + 55;
+
+                const ageGap = estAge - targetRetireAge;
+                let gapAnalysisText = "";
+                if (ageGap <= 0) {
+                    gapAnalysisText = `🎉 恭喜！您預估可在 <strong>${estAge} 歲</strong> 達標，比您設定的心理目標（${targetRetireAge} 歲）提早或準時達成，進度非常超前！`;
                 } else {
-                    moatStatusText = "需要強化（建議優先補齊緊急預備金或保險保障）";
+                    gapAnalysisText = `⚠️ 提醒您：預估達標年齡為 <strong>${estAge} 歲</strong>，比您期望的 ${targetRetireAge} 歲落後了約 <strong>${ageGap} 年</strong>。需透過優化儲蓄率或調整生活模式來縮短差距。`;
+                }
+
+                let moatScore = (hasDebt ? 1 : 0) + (hasEmergency ? 1 : 0) + (hasInsurance ? 1 : 0);
+                let moatStatusHTML = "";
+                if (moatScore === 3) {
+                    moatStatusHTML = "🟢 <strong>三關卡完全健檢通過</strong>：您的財務護城河非常扎實，具備極強的抗風險能力。";
+                } else {
+                    moatStatusHTML = `🟡 <strong>防護網尚未完全建立（完成度 ${moatScore}/3）</strong>：建議優先清償高利負債、備妥 6 個月緊急預備金並規劃基礎實支實付醫療險，避免突發風險擊潰 FIRE 計畫。`;
                 }
 
                 container.innerHTML = `
-                    <div class="space-y-4">
+                    <div class="space-y-5">
                         <div class="border-l-4 border-emerald-500 pl-4 py-1">
-                            <h3 class="font-bold text-white text-sm">🤖 智慧理財 AI 專屬診斷報告 [${modeName}]</h3>
-                            <p class="text-[11px] text-slate-400 mt-0.5">試算對象：${age} 歲 | 目前儲蓄率：${savingsRate.toFixed(1)}% | 護城河狀態：${moatStatusText}</p>
+                            <h3 class="font-bold text-white text-sm">📋 【FIRE-Craft 專業財務顧問診斷報告書】</h3>
+                            <p class="text-[11px] text-slate-400 mt-0.5">模式：${modeName} | 當前年齡：${age} 歲 | 目標退休年齡：${targetRetireAge} 歲 | 現有淨資產：NT$ ${netWorth.toLocaleString()}</p>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                            <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700/80">
-                                <h4 class="font-bold text-emerald-400 text-xs mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> 財務優勢與可行性分析</h4>
-                                <p class="text-xs text-slate-300 leading-relaxed">
-                                    選擇 <strong>${modeName}</strong> 非常符合您當前的財務條件。目前儲蓄率達到 ${savingsRate.toFixed(1)}%，代表您具有極佳的現金流控制力。透過長期將資本投入全市場股票 ETF，可享受穩健的複利增長。
-                                </p>
-                            </div>
-                            <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700/80">
-                                <h4 class="font-bold text-amber-400 text-xs mb-1.5 flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> 潛在風險與通膨注意事項</h4>
-                                <p class="text-xs text-slate-300 leading-relaxed">
-                                    退休後需考量長期 2%~3% 的通膨侵蝕與醫療費成長。此外，在退休前 5 年與退休後頭 5 年（提領順序風險敏感期），若遇到極端熊市，應避免過度變賣急跌的權益類資產。
-                                </p>
-                            </div>
+                        <!-- 1. 現金流與目標落差分析 -->
+                        <div class="bg-slate-800/90 p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-emerald-400 text-xs mb-2 flex items-center gap-1.5"><i class="fa-solid fa-bullseye"></i> 1. 現金流與退休目標落差分析</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-2">
+                                您的年主動收入為 NT$ ${income.toLocaleString()}，年生活開銷為 NT$ ${expense.toLocaleString()}，計算出目前的<strong>儲蓄率為 ${savingsRate.toFixed(1)}%</strong>。
+                            </p>
+                            <p class="text-xs text-slate-200 bg-slate-900/60 p-2.5 rounded border border-slate-700/60">
+                                ${gapAnalysisText}
+                            </p>
                         </div>
 
-                        <div class="bg-slate-800/90 p-4 rounded-xl border border-emerald-500/30">
-                            <h4 class="font-bold text-white text-xs mb-2 flex items-center gap-1.5"><i class="fa-solid fa-compass text-emerald-400"></i> AI 建議之具體調整方向</h4>
-                            <ul class="list-disc list-inside text-xs text-slate-300 space-y-1.5">
-                                <li><strong>核心資產配置：</strong>建議將投資組合配置於全球市值型 ETF（如 VT）搭配適度優質債券，獲取長期市場平均報酬。</li>
-                                <li><strong>護城河補強：</strong>確保至少留存 6~12 個月開銷於高利活存作為防守資金，無須在市場低谷時被迫賣股變現。</li>
-                                <li><strong>動態提領機制：</strong>若退休後遇到市場年大跌超過 20%，可啟動彈性提領機制，該年度縮減 10% 之非必要生活消費。</li>
+                        <!-- 2. 財務護城河與風險評估 -->
+                        <div class="bg-slate-800/90 p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-teal-400 text-xs mb-2 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved"></i> 2. 財務護城河與安全防護檢核</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                ${moatStatusHTML}。在通往提早退休的長跑馬拉松中，穩固的現金緩衝區與保險是確保您在遇到景氣衰退或重大醫療支出時，不被迫在市場谷底「割肉賣股」的關鍵防線。
+                            </p>
+                        </div>
+
+                        <!-- 3. 資產配置與複利策略 -->
+                        <div class="bg-slate-800/90 p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-amber-400 text-xs mb-2 flex items-center gap-1.5"><i class="fa-solid fa-chart-pie"></i> 3. 資產配置與複利優化策略</h4>
+                            <ul class="list-disc list-inside text-xs text-slate-300 space-y-1.5 leading-relaxed">
+                                <li><strong>核心追蹤全球市場：</strong>建議以涵蓋全球或美國大型企業的指數型 ETF（如 VT 或 S&P 500 相關標的）作為核心配置，降低單一公司或地區風險。</li>
+                                <li><strong>報酬率保守假設：</strong>您設定的實質報酬率為 <strong>${returnRate}%</strong>，在歷史回測中合理且具備防禦性。</li>
+                                <li><strong>控制生活方式膨脹：</strong>隨著主動收入增加，切勿同步等幅擴大開銷（ Lifestyle Inflation ），維持高儲蓄率是加速達標的不二法門。</li>
                             </ul>
+                        </div>
+
+                        <!-- 4. 序列報酬風險與提領應對 -->
+                        <div class="bg-slate-800/90 p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-rose-400 text-xs mb-2 flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> 4. 序列報酬風險 (Sequence of Returns Risk) 應對</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                退休前後各 5 年是最脆弱的時期。若此時碰上連續幾年的嚴重熊市，會對本金造成永久性傷害。建議規劃「彈性提領機制」：當年度市場回檔超過 20% 時，主動縮減 10%~15% 的非必要開銷，能大幅提升 40 年退休金的存活率至 98% 以上。
+                            </p>
+                        </div>
+
+                        <!-- 5. 具體調整方向與行動方針 -->
+                        <div class="bg-slate-800/95 p-4 rounded-xl border border-emerald-500/40">
+                            <h4 class="font-bold text-white text-xs mb-2 flex items-center gap-1.5"><i class="fa-solid fa-list-check text-emerald-400"></i> 5. 您下一步的具體調整方向與行動清單</h4>
+                            <ol class="list-decimal list-inside text-xs text-slate-200 space-y-1.5 leading-relaxed">
+                                <li><strong>短程（1個月內）：</strong>檢查並補齊尚未勾選的財務護城河項目（緊急預備金與保險規劃）。</li>
+                                <li><strong>中程（6個月內）：</strong>建立自動化定期定額扣款投資機制，落實紀律投資，避免情緒化進出市場。</li>
+                                <li><strong>長程（每年檢視）：</strong>每年根據通膨率與實際開銷微調年度預算，確保 FIRE 計畫持續穩健前進。</li>
+                            </ol>
                         </div>
                     </div>
                 `;
             }, 600);
         }
 
-        // 頁面載入初始化
+        // 初始化
         window.onload = function() {
             calculateFIRE();
         };
